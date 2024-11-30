@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  promtail:
+    image: docker.io/grafana/promtail:latest
+    container_name: promtail
+    volumes:
+      - /u01/mydev/containers-fs-layout/grafana-loki/etc/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - /u01/mydev/containers-fs-layout/jc21-nginx-proxy-manager/data/logs:/var/log/jc21-nginxpm
+      - /u01/mydev/containers-fs-layout/jlesage-nginx-proxy-manager/data/logs:/var/log/jlesage-nginxpm
+      - /u01/mydev/containers-fs-layout/nginx/data/logs:/var/log/nginxpm
+    restart: unless-stopped
+    networks:
+      - monitoring-network
+
+networks:
+  monitoring-network:
+    driver: bridge
+
